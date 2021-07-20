@@ -14,6 +14,9 @@
           <a class="nav-link {{ (request()->is('list')) ? 'active' : '' }}" aria-current="page" href="{{url('/list')}}">List</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link {{ (request()->is('create')) ? 'active' : '' }}" aria-current="page" href="{{url('/create')}}">Create</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{url('/json')}}" target="_blank">Json</a>
         </li>
       </ul>

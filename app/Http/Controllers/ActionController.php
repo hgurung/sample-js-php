@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Requests\ActionRequest;
 
 use Storage;
+use Validator;
 
 class ActionController extends Controller
 {
@@ -17,7 +17,12 @@ class ActionController extends Controller
 
     public function list(Request $request) {
         $data['rows'] = $this->getAllData($request);
+        $data['total'] = $this->getSumOfAllData($data['rows']);
         return view('list', $data);
+    }
+
+    public function create(Request $request) {
+        return view('create');
     }
 
     public function getAllData($request) {
@@ -33,8 +38,35 @@ class ActionController extends Controller
         return $rowsData;
     }
 
-    public function store(Request $request) {
+    public function getSumOfAllData($data) {
+        $total = 0;
+        if (!empty($data)) {
+            $total = $data->sum('price');
+        }
+        return $total;
+    }
 
+    public function store(Request $request) {
+        $rules = $this->getValidationRules();
+        $validator = Validator::make($request->all(), $rules);
+        // Validate the input and return correct response
+        if ($validator->fails())
+        {
+            return response()->json(array(
+                'success' => false,
+                'errors' => $validator->getMessageBag()->toArray()
+
+            ), 422);
+        }
+        return response()->json(array('data' => $request->only(['id', 'value'])), 200);
+    }
+
+    public function getValidationRules() {
+        $rules = [
+            'id' => 'required|integer|min:1',
+            'value' => 'required|string|max:255'
+        ];
+        return $rules;
     }
 
     public function viewJsonData() {

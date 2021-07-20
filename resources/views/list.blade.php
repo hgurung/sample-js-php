@@ -11,22 +11,34 @@
                     <button type="submit" class="btn btn-primary mb-3">Search</button>
                 </div>
             </form>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($rows as $row)
-                    <tr>
-                        <td>{{$row->id }}</td>
-                        <td>{{$row->price }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(!$rows->isEmpty())
+                            @foreach($rows as $row)
+                            <tr>
+                                <td>{{ $row->id }}</td>
+                                <td>{{ $row->price }}</td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td colspan="3">{{ $total}}</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td colspan="4"><p class="text text-info">No data was found</p></td>
+                            </tr>
+                            
+                        @endif
+                    </tbody>
+                </table>
+           
         </div>
     </div>
 @endsection
