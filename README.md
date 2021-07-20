@@ -3,9 +3,11 @@
 2. Run
     `composer install` to add laravel package dependencies
 
-3. If you want to connect database change copy .env.example file to .env
+3. Copy .env.example file to .env
 
 4. Run 
+
+    `php artisan key:generate` to generate unique key for application
 
     `yarn install` to install npm package dependencies
 
